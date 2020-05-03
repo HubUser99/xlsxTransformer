@@ -1,3 +1,3 @@
-interface jsonObject {
-    [key: string]: string | jsonObject;
+interface JsonObject {
+    [key: string]: string | JsonObject;
 };
