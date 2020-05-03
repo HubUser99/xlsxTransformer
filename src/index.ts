@@ -1,7 +1,7 @@
 import XLSX from "xlsx";
 import fs from "fs";
 import path from "path";
-import { readXml, xmlToJson } from "./utils/misc";
+import { readXml, xmlToJson, deepUnroll } from "./utils/misc";
 
 const main = (argv: string[]) => {
     if (argv.length !== 1) {
@@ -16,12 +16,11 @@ const main = (argv: string[]) => {
     
     const workBook = readXml(xlsxFilePath);
     const jsonObject = xmlToJson(workBook);
-    // const unrolledJsonObject = deepUnroll(jsonObject);
+    const unrolledJsonObject = deepUnroll(jsonObject, '__');
 
-    const jsonString = JSON.stringify(jsonObject, null, 4);
+    const jsonString = JSON.stringify(unrolledJsonObject, null, 4);
 
     console.log(jsonString);
-    
 
     // TODO: interface name import
     const interfaceName = 'TestInterface';

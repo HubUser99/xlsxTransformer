@@ -44,11 +44,22 @@ export const xmlToJson = (workBook: WorkBook) => {
     return jsonObjectWithNamedSheets;
 };
 
-export const deepUnroll = (object: jsonObject, layer: number = 0) => {
+export const deepUnroll = (object: jsonObject, separator: string, layer: number = 0) => {
     const unrolledObject: any = {};
-
-    Object.values(object).forEach((value) => {
-        Object.entries(value);
+    Object.entries(object).forEach(([key, value]) => {
+        const unrolledObjectItem: any = {};
+        Object.entries(value).forEach(([key, value]) => {
+            const separatedKeys = key.split(separator);
+            if (separatedKeys.length < 3) {
+                unrolledObjectItem[separatedKeys[1]] = value;
+            } else {
+                unrolledObjectItem[separatedKeys[1]] = {
+                    ...unrolledObjectItem[separatedKeys[1]],
+                    [separatedKeys[2]]: typeof value === 'string' || isNull(value) ? value : deepUnroll(value, separator)
+                };
+            }
+        });
+        unrolledObject[key] = unrolledObjectItem;
     });
 
     return unrolledObject;

@@ -14,8 +14,8 @@ var main = function (argv) {
     var xlsxFilePath = path_1.default.resolve(argv[0]);
     var workBook = misc_1.readXml(xlsxFilePath);
     var jsonObject = misc_1.xmlToJson(workBook);
-    // const unrolledJsonObject = deepUnroll(jsonObject);
-    var jsonString = JSON.stringify(jsonObject, null, 4);
+    var unrolledJsonObject = misc_1.deepUnroll(jsonObject, '__');
+    var jsonString = JSON.stringify(unrolledJsonObject, null, 4);
     console.log(jsonString);
     // TODO: interface name import
     var interfaceName = 'TestInterface';
