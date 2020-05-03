@@ -1,35 +1,38 @@
-import XLSX from "xlsx";
 import fs from "fs";
 import path from "path";
-import { readXml, xmlToJson, deepUnroll } from "./utils/misc";
+import {
+	readXml,
+	xmlToJson,
+	deepUnroll,
+	removeSemicolonsFromKeys,
+	jsonToInterface,
+} from "./utils/misc";
 
 const main = (argv: string[]) => {
-    if (argv.length !== 1) {
-        console.log(`
+	if (argv.length !== 1) {
+		console.log(`
         Wrong number of arguments!
-        Usage: yarn start <path to xlsx> <path to output file>
+        Usage: yarn start <path to xlsx>
         `);
-        return;
+		return;
     }
-
-    const xlsxFilePath = path.resolve(argv[0]);
     
-    const workBook = readXml(xlsxFilePath);
-    const jsonObject = xmlToJson(workBook);
-    const unrolledJsonObject = deepUnroll(jsonObject, '__');
+    const config = require('../config.json');
+    const delimiter: string = config.delimiter;
 
-    const jsonString = JSON.stringify(unrolledJsonObject, null, 4);
+	const xlsxFilePath = path.resolve(argv[0]);
 
-    console.log(jsonString);
+	const workBook = readXml(xlsxFilePath);
+	const jsonObject = xmlToJson(workBook);
+	const unrolledJsonObject = deepUnroll(jsonObject, delimiter);
 
-    // TODO: interface name import
-    const interfaceName = 'TestInterface';
+	const jsonString = JSON.stringify(unrolledJsonObject, null, 4);
 
-    const interfaceString = `interface ${interfaceName} ${jsonString}`;
+	const updatedJsonString = removeSemicolonsFromKeys(jsonString);
 
-    fs.writeFileSync('output/test.ts', interfaceString, 'utf8');
+	const interfaceString = jsonToInterface(updatedJsonString);
 
-    console.log('Done!');
+	fs.writeFileSync("output/test.ts", interfaceString, "utf8");
 };
 
 main(process.argv.splice(2));
