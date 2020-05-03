@@ -1,4 +1,5 @@
 {
-    "headerNode": "|",
-    "delimiter": "__"
+	"headerNode": "|",
+	"delimiter": "__",
+	"outDir": "./output"
 }
