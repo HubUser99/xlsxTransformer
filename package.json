@@ -1,0 +1,26 @@
+{
+  "name": "xlsx-transformer",
+  "keywords": [
+    "xlsx",
+    "json",
+    "convert",
+    "transform",
+    "typescript",
+    "interface"
+  ],
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "scripts": {
+    "start": "tsc && node build/index.js"
+  },
+  "repository": "https://github.com/HubUser99/xlsxTransformer.git",
+  "author": "HubUser99 <cliff.goga@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "xlsx": "^0.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.4",
+    "typescript": "^3.8.3"
+  }
+}
