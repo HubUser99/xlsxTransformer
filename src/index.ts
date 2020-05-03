@@ -19,6 +19,7 @@ const main = (argv: string[]) => {
     
     const config = require('../config.json');
     const delimiter: string = config.delimiter;
+    const outDir: string = config.outDir;
 
 	const xlsxFilePath = path.resolve(argv[0]);
 
@@ -32,7 +33,11 @@ const main = (argv: string[]) => {
 
 	const interfaceString = jsonToInterface(updatedJsonString);
 
-	fs.writeFileSync("output/test.ts", interfaceString, "utf8");
+    if (!fs.existsSync(outDir)){
+        fs.mkdirSync(outDir);
+    }
+
+	fs.writeFileSync(outDir + "/test.ts", interfaceString, "utf8");
 };
 
 main(process.argv.splice(2));
