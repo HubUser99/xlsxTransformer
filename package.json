@@ -17,7 +17,7 @@
   "author": "HubUser99 <cliff.goga@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "xlsx": "^0.16.0"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@types/node": "^13.13.4",
